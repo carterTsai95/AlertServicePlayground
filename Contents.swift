@@ -6,7 +6,6 @@ var cancellableSet: Set<AnyCancellable> = []
 
 alertService.$currentAlerts
     .sink(receiveCompletion: { completion in
-        print(".sink() received the completion", String(describing: completion))
     }, receiveValue: { alerts in
     })
     .store(in: &cancellableSet)
@@ -22,8 +21,6 @@ DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
 }
 
 DispatchQueue.main.asyncAfter(deadline: .now() + 1.7) {
-    //print("remove 2st Alert")
-    print("Alerts: \(alertService.currentAlerts)")
     alertService.removeAlert(alertService.currentAlerts[0])
 }
 
