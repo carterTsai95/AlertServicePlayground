@@ -12,15 +12,19 @@ alertService.$currentAlerts
 
 DispatchQueue.main.asyncAfter(deadline: .now()) {
     print("add alert no.1")
-    alertService.presentAlert(title: "1st Alert")
+    alertService.presentAlert(
+        .init(title: "1nd Alert", countDownTimer: 1)
+    )
 }
 
-DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
     print("add alert no.2")
-    alertService.presentAlert(title: "2st Alert")
+    alertService.presentAlert(
+        .init(title: "2nd Alert", countDownTimer: 3)
+    )
 }
 
 DispatchQueue.main.asyncAfter(deadline: .now() + 1.7) {
-    alertService.removeAlert(alertService.currentAlerts[0])
+    alertService.removeAlert(alertService.currentAlerts.first ?? AlertModel(title: ""))
 }
 

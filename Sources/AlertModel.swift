@@ -2,6 +2,16 @@ import Foundation
 import SwiftUI
 
 public struct AlertModel: Equatable {
+    public init(
+        title: String,
+        countDownTimer: Int = 2,
+        description: String? = nil
+    ) {
+        self.title = title
+        self.countDownTimer = countDownTimer
+        self.description = description
+    }
+    
     public static func == (lhs: AlertModel, rhs: AlertModel) -> Bool {
         return lhs.id == rhs.id
     }
@@ -10,7 +20,7 @@ public struct AlertModel: Equatable {
     let type: AlertType = .modal
     let title: String
     let autoDismiss: Bool = true
-    let countDownTimer: Int = 2
+    var countDownTimer: Int = 2
     let alertAnimationDuration: Double = 1.0
     var timer: Timer?
     var description: String?

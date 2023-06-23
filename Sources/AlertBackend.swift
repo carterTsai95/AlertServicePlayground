@@ -26,6 +26,14 @@ public class AlertsServiceBackend: AlertsService, ObservableObject {
             )
         }
     }
+
+    public func presentAlert(_ model: AlertModel) {
+        DispatchQueue.global(qos: .utility).async {
+            self.alertsQueueSignal.send(
+                model
+            )
+        }
+    }
     
     private func registeredAlert(_ alert: AlertModel) {
         self.currentAlerts.append(alert)
@@ -41,7 +49,7 @@ public class AlertsServiceBackend: AlertsService, ObservableObject {
         
         currentAlerts[index].timer = Timer()
         currentAlerts[index].timer?.invalidate()
-        currentAlerts[index].timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+        currentAlerts[index].timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(currentAlerts[index].countDownTimer), repeats: true) { _ in
             withAnimation(self.currentAlerts[index].alertAnimation.value) {
                 self.removeAlert(alert)
             }
@@ -50,6 +58,7 @@ public class AlertsServiceBackend: AlertsService, ObservableObject {
 
     public func removeAlert(_ alert: AlertModel) {
         guard let index = currentAlerts.firstIndex(where: { $0.id == alert.id }) else {
+            print("Cannot find alert")
             return
         }
 
